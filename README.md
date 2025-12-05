@@ -79,7 +79,7 @@ cd frontend
 # Install dependencies
 npm install
 
-# Start development server
+# Start development serve
 npm run dev
 ```
 
