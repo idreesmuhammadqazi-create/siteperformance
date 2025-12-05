@@ -11,6 +11,7 @@ import MetricsGrid from '../components/MetricsGrid';
 import Waterfall from '../components/Waterfall';
 import WaterfallTable from '../components/WaterfallTable';
 import Suggestions from '../components/Suggestions';
+import PerformanceSummary from '../components/PerformanceSummary';
 
 export default function Results() {
   const [searchParams] = useSearchParams();
@@ -63,6 +64,21 @@ export default function Results() {
 
   const handleToggle = (key) => {
     setToggles(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  // Export results to JSON file
+  const handleExport = () => {
+    const dataStr = JSON.stringify(data, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    const filename = `performance-${new URL(data.url).hostname}-${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   if (!url) {
@@ -290,8 +306,25 @@ export default function Results() {
             >
               Analyze Another URL
             </button>
+            <button
+              onClick={handleExport}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#4caf50',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              ↓ Export Results
+            </button>
           </div>
         </div>
+
+        {/* Performance Summary for Non-Technical Users */}
+        <PerformanceSummary data={data} />
 
         {/* Metric Toggles */}
         <div style={{
