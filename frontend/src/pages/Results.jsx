@@ -11,6 +11,7 @@ import MetricsGrid from '../components/MetricsGrid';
 import Waterfall from '../components/Waterfall';
 import WaterfallTable from '../components/WaterfallTable';
 import Suggestions from '../components/Suggestions';
+import PerformanceSummary from '../components/PerformanceSummary';
 
 export default function Results() {
   const [searchParams] = useSearchParams();
@@ -321,6 +322,9 @@ export default function Results() {
             </button>
           </div>
         </div>
+
+        {/* Performance Summary for Non-Technical Users */}
+        <PerformanceSummary data={data} />
 
         {/* Metric Toggles */}
         <div style={{
