@@ -2,6 +2,9 @@
  * API client for backend communication
  */
 
+// Use environment variable for API URL, fallback to relative path for local dev
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+
 /**
  * Analyze URL by calling backend API
  * @param {string} url - URL to analyze
@@ -9,7 +12,7 @@
  */
 export async function analyzeUrl(url) {
   try {
-    const response = await fetch('/api/analyze', {
+    const response = await fetch(`${API_BASE_URL}/api/analyze`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
